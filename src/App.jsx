@@ -1,29 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ProductsList from './components/ProductsList';
 import { useCart } from './hooks/useCart';
 
-/*
-1. Loop through items in cart
-2. Find product that has matching id
-3. Display product
-
-*/
-
 function App() {
   const { cart, products, clearCart } = useCart();
+  const [myValue, setMyValue] = useState(false);
+
+  function toggleValue() {
+    setMyValue((prevState) => !prevState);
+  }
+
   return (
     <div>
+      <button onClick={toggleValue}>{myValue.toString()}</button>
       <div>
         <button onClick={clearCart}>CLEAR</button>
         Cart:{' '}
         <div>
-          {cart.map((id) => {
+          {cart.map((id, index) => {
             const product = products.find(
               (currentProduct) => currentProduct.id === id,
             );
             return (
-              <div>
-                {product.title} - {product.price}
+              <div key={index}>
+                {index} {product.title} - {product.price}
               </div>
             );
           })}
